@@ -1,9 +1,41 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: holamibanco-ingress
-  annotations:
+    annotations:
+     annotations:
     kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  tls:
+    - hosts:
+        - 134.33.252.41.nip.io
+      secretName: holamibanco-tls
+ kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  tls:
+    - hosts:
+        - 134.33.252.41.nip.io
+      secretName: holamibanco-tls
+name: holamibanco-ingress
+  annotations:
+      annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  tls:
+    - hosts:
+        - 134.33.252.41.nip.io
+      secretName: holamibanco-tls
+ annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  tls:
+    - hosts:
+        - 134.33.252.41.nip.io
+      secretName: holamibanco-tls
+ kubernetes.io/ingress.class: nginx
 spec:
   rules:
     - host: 134.33.252.41.nip.io  
