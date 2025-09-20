@@ -9,7 +9,7 @@ env:
   ACR_NAME: holamibancoacr
   AKS_RG: rg-holaMiBanco  
   AKS_NAME: holaMiBanco-aks
-  IMAGE_NAME: holaMiBanco-app
+  IMAGE_NAME: holamibanco-app
 
 jobs:
   deploy:
