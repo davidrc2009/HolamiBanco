@@ -35,7 +35,11 @@ jobs:
       - name: Get AKS credentials
         run: az aks get-credentials -g $AKS_RG -n $AKS_NAME --overwrite-existing
 
-      - name: Deploy to AKS using latest image
+      - name: Update deployment image
         run: |
-          kubectl set image deployment/$IMAGE_NAME $IMAGE_NAME=$ACR_NAME.azurecr.io/$IMAGE_NAME:latest
-          kubectl apply -f k8s/
+          kubectl set image deployment/$IMAGE_NAME $IMAGE_NAME=$ACR_NAME.azurecr.io/$IMAGE_NAME:latest --record
+
+      - name: Force rollout restart to pick up latest image
+        run: |
+          kubectl rollout restart deployment/$IMAGE_NAME
+          kubectl rollout status deployment/$IMAGE_NAME
