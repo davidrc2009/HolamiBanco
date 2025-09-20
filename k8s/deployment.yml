@@ -17,6 +17,7 @@ spec:
       containers:
         - name: holamibanco-app
           image: holamibancoacr.azurecr.io/holamibanco-app:latest
+          imagePullPolicy: Always        
           ports:
             - containerPort: 3000
           resources:
