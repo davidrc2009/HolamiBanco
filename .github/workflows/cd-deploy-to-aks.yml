@@ -3,7 +3,7 @@ name: CD - Deploy to AKS
 on:
   push:
     branches:
-      - main   # dispara al hacer push en main (ajústalo si usas otra rama)
+      - main  # Trigger en rama main
 
 env:
   ACR_NAME: holamibancoacr
