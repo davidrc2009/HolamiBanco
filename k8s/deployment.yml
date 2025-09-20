@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: holamibanco-app
+  labels:
+    app: holamibanco-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: holamibanco-app
+  template:
+    metadata:
+      labels:
+        app: holamibanco-app
+    spec:
+      containers:
+        - name: holamibanco-app
+          image: holamibancoacr.azurecr.io/holamibanco-app:latest
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "250m"
+              memory: "256Mi"
