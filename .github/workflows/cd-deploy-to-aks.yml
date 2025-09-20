@@ -3,7 +3,7 @@ name: CD - Deploy to AKS
 on:
   push:
     branches:
-      - main   # dispara al hacer push en main (ajústalo si usas otra rama)
+      - main
 
 env:
   ACR_NAME: holamibancoacr
@@ -27,17 +27,15 @@ jobs:
       - name: Azure Container Registry login
         run: az acr login --name $ACR_NAME
 
-      - name: Build and push Docker image
+      - name: Build and push Docker image with latest tag
         run: |
-          IMAGE_TAG=${{ github.sha }}
-          docker push $ACR_NAME.azurecr.io/$IMAGE_NAME:$IMAGE_TAG
+          docker build -t $ACR_NAME.azurecr.io/$IMAGE_NAME:latest .
           docker push $ACR_NAME.azurecr.io/$IMAGE_NAME:latest
-          echo "IMAGE=$ACR_NAME.azurecr.io/$IMAGE_NAME:$IMAGE_TAG" >> $GITHUB_ENV
 
       - name: Get AKS credentials
         run: az aks get-credentials -g $AKS_RG -n $AKS_NAME --overwrite-existing
 
-      - name: Deploy manifests to AKS
+      - name: Deploy to AKS using latest image
         run: |
-          kubectl set image deployment/$IMAGE_NAME $IMAGE_NAME=${{ env.IMAGE }} || true
+          kubectl set image deployment/$IMAGE_NAME $IMAGE_NAME=$ACR_NAME.azurecr.io/$IMAGE_NAME:latest
           kubectl apply -f k8s/
